@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- TAB NAME -->
+    <title>sorry babu &lt;3</title>
+
+    <!-- TAB ICON -->
+    <link rel="icon" href="IMG_20251213_112936_600.webp" type="image/webp">
+
+    <style>
+        *{ box-sizing:border-box; }
+
+        body{
+            margin:0;
+            height:100vh;
+            background:#ffe6ea;
+            font-family:Arial, sans-serif;
+            overflow:hidden;
+        }
+
+        /* CARD */
+        #card{
+            position:absolute;
+            top:50%;
+            left:50%;
+            transform:translate(-50%,-50%);
+            background:white;
+            padding:30px;
+            border-radius:20px;
+            text-align:center;
+            box-shadow:0 15px 30px rgba(0,0,0,0.2);
+            width:320px;
+            z-index:1;
+        }
+
+        /* BUTTONS */
+        .buttons{
+            margin-top:20px;
+        }
+
+        .btn{
+            width:100px;
+            padding:10px 0;
+            border-radius:25px;
+            font-size:16px;
+            text-align:center;
+            text-decoration:none;
+            display:inline-block;
+            user-select:none;
+            cursor:pointer;
+        }
+
+        #yes{
+            background:#e91e63;
+            color:white;
+        }
+
+        #no{
+            background:#ccc;
+            color:black;
+            position:relative;
+            z-index:2;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="card">
+    <h2 id="title">Mujhe Maaf Kardo Maharani Sahiba? 💖</h2>
+    <p id="text"></p>
+
+    <div class="buttons">
+        <a href="#" class="btn" id="yes">Yes</a>
+        <a href="#" class="btn" id="no">No</a>
+    </div>
+</div>
+
+<script>
+let step = 0;
+let runaway = false;
+
+const title = document.getElementById("title");
+const text  = document.getElementById("text");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+
+/* ---------- PAGE FLOW (NO CLICK) ---------- */
+noBtn.addEventListener("click", e=>{
+    e.preventDefault();
+
+    if(runaway) return;
+
+    if(step === 0){
+        step++;
+        title.innerText = "Please think again 🥺";
+    }
+    else if(step === 1){
+        step++;
+        title.innerText = "Firse soch lo malkin 😢";
+        text.innerText  = "Please aisa nahi karo 😭";
+    }
+    else if(step === 2){
+        step++;
+        title.innerText = "Hey devi apne bhakt par kripa kare 🙏";
+        text.innerText  = "please maan jao babu";
+        activateRunaway();   // 4th page
+    }
+});
+
+/* ---------- ACTIVATE RUNAWAY ---------- */
+function activateRunaway(){
+    runaway = true;
+
+    const rect = noBtn.getBoundingClientRect();
+    document.body.appendChild(noBtn);
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = rect.left + "px";
+    noBtn.style.top  = rect.top  + "px";
+    noBtn.style.zIndex = 9999;
+}
+
+/* ---------- RUNAWAY LOGIC ---------- */
+function runAway(){
+    if(!runaway) return;
+
+    const padding = 10;
+    const maxX = window.innerWidth  - noBtn.offsetWidth  - padding;
+    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top  = y + "px";
+}
+
+/* hover / touch / click */
+noBtn.addEventListener("mouseenter", runAway);
+noBtn.addEventListener("mousemove", runAway);
+noBtn.addEventListener("touchstart", runAway);
+noBtn.addEventListener("click", runAway);
+
+/* ---------- YES FINAL ---------- */
+yesBtn.addEventListener("click", e=>{
+    e.preventDefault();
+    document.body.innerHTML = `
+        <div id="card">
+            <h2>Hehe 😍</h2>
+            <p style="font-size:20px;color:#e91e63">
+                I love you mera baboooo 💕<br>
+                Thank you so much maan'ne ke liye 😘
+            </p>
+        </div>
+    `;
+});
+</script>
+
+</body>
+</html>
